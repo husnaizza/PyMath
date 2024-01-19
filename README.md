@@ -2,7 +2,7 @@
 A customizable Math Quiz great for learning or just practice.
 
 ## Usage
-To install run the following commands in shell:
+To use run the following commands in shell:
 ```
 pip install -r requirements.txt
 python app.py 
