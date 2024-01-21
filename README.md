@@ -1,4 +1,4 @@
-![PyMath_Logo](https://cdn.discordapp.com/attachments/1042861877652361217/1197221981804834897/PyMath_Logo.png?ex=65ba7adb&is=65a805db&hm=4a3641c16ba3f556566d568cf62390250e349132209d28ae95ee7746c81e5272&)
+![PyMath_Logo](https://raw.githubusercontent.com/SuperZekes/PyMath/main/PyMath_Logo.png)
 
 
 # PyMath
