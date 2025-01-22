@@ -3,6 +3,7 @@
 
 # PyMath
 A customizable Math Quiz great for learning or just practice.
+Test a live demo here: https://pymath.up.railway.app/
 
 ## Usage
 To use run the following commands in shell:
