@@ -37,35 +37,43 @@ def reset():
         y = random.randint(minvalue, maxvalue)
         operation = random.choice(operations)
         
-        # Ensure that the smaller number comes first in the division problem
+        # For division problems, ensure the smaller number is the divisor
         if operation == "/":
+            # Randomly decide if the division will have a remainder or not
+            has_remainder = random.choice([True, False])  # Randomly choose if the division has a remainder
+            
+            if has_remainder:
+                # Ensure division has a remainder by making sure x is not divisible by y
+                while x % y == 0:  # Ensure that x is not evenly divisible by y
+                    x = random.randint(minvalue, maxvalue)
+                    y = random.randint(minvalue, maxvalue)
+            else:
+                # Ensure division is exact (no remainder)
+                while x % y != 0:  # Ensure that x is evenly divisible by y
+                    x = random.randint(minvalue, maxvalue)
+                    y = random.randint(minvalue, maxvalue)
+            
+            # Ensure the smaller number is the divisor (outside the square)
             if x < y:
-                x, y = y, x  # Swap x and y if x is smaller than y (so y comes first)
-        
-        if enablenegatives == False and y > x and operation in ["-", "/"]:
-            x, y = y, x
-        
-        question = {'problem': f'{x} {operation} {y}'}
-        
-        if operation == "+":
-            question['answer'] = x + y
-        elif operation == "-":
-            question['answer'] = x - y
-        elif operation == "x":
-            question['answer'] = x * y
-        elif operation == "/":
-            # Ensure division is valid for long division: x should be divisible by y
-            while x % y != 0:  # Ensure that x is divisible by y without a remainder
-                x = random.randint(minvalue, maxvalue)
-                y = random.randint(minvalue, maxvalue)
-                
+                x, y = y, x  # Swap x and y if x is smaller (make y the divisor)
+            
             quotient = x // y  # Integer division (quotient)
-            remainder = x % y  # This should always be zero for exact division
+            remainder = x % y  # The remainder, 0 if no remainder exists
             
             # The problem presented to the user
-            question['problem'] = f"{y} ÷ {x} = ? with remainder ?"
-            question['answer'] = (quotient, remainder)  # Store as tuple
-            
+            question = {'problem': f"What is the quotient and remainder when dividing {x} by {y}?"}
+            question['answer'] = (quotient, remainder)  # Store as tuple (quotient, remainder)
+        
+        else:
+            question = {'problem': f'{x} {operation} {y}'}
+        
+            if operation == "+":
+                question['answer'] = x + y
+            elif operation == "-":
+                question['answer'] = x - y
+            elif operation == "x":
+                question['answer'] = x * y
+        
         questions.append(question)
 
     current_question_index = 0
@@ -81,7 +89,7 @@ def index():
 
     if request.method == 'POST':
         # Check if it's a division problem
-        if '÷' in questions[current_question_index]['problem']:
+        if 'What is the quotient and remainder' in questions[current_question_index]['problem']:
             # Get both quotient and remainder from the user
             try:
                 user_quotient = int(request.form['quotient'])
