@@ -13,13 +13,24 @@
   <h1 class="ms-2">PyMath - {{ current_question_index + 1 }}/{{ totalquestions }}</h1>
 
   <form method="POST" class="ms-2 form-group">
-
-    {{ problem }}
+    <p>{{ problem }}</p>
     
-    <input type="text" name="answer" style="display: inline-block; width: auto;" class="form-control">
+    {% if '÷' in problem %}
+      <!-- Input for division problems (quotient and remainder) -->
+      <label for="quotient">Quotient:</label>
+      <input type="number" name="quotient" class="form-control" required>
+      
+      <label for="remainder">Remainder:</label>
+      <input type="number" name="remainder" class="form-control" required>
+      
+    {% else %}
+      <!-- Input for other problems (addition, subtraction, multiplication) -->
+      <label for="answer">Answer:</label>
+      <input type="number" name="answer" class="form-control" required>
+    {% endif %}
     
-    <input type="submit" value="Submit" style="display: inline-block;" class="btn btn-primary">
-    
+    <br>
+    <input type="submit" value="Submit" class="btn btn-primary">
   </form>
 
 </body>
