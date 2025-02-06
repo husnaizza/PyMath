@@ -1,5 +1,5 @@
 enable_negatives: false
-operations: ["/"]
+operations: ["+", "-", "x", "/"]
 total_questions: 5
 max_value: 100
 min_value: 1
