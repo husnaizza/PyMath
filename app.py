@@ -15,6 +15,8 @@ enablenegatives = settings["enable_negatives"]
 totalquestions = settings["total_questions"]
 maxvalue = settings["max_value"]
 minvalue = settings["min_value"]
+max_dividend = settings.get("max_dividend", maxvalue)  # Limit for dividend
+max_divisor = settings.get("max_divisor", maxvalue)  # Limit for divisor
 current_question_index = 0
 num_correct = 0
 num_wrong = 0
@@ -39,19 +41,23 @@ def reset():
         
         # For division problems, ensure the smaller number is the divisor
         if operation == "/":
+            # Limit both the dividend and divisor
+            x = random.randint(minvalue, min(max_dividend, maxvalue))  # Ensure the dividend doesn't exceed max_dividend
+            y = random.randint(minvalue, min(max_divisor, maxvalue))  # Ensure the divisor doesn't exceed max_divisor
+
             # Randomly decide if the division will have a remainder or not
             has_remainder = random.choice([True, False])  # Randomly choose if the division has a remainder
             
             if has_remainder:
                 # Ensure division has a remainder by making sure x is not divisible by y
                 while x % y == 0:  # Ensure that x is not evenly divisible by y
-                    x = random.randint(minvalue, maxvalue)
-                    y = random.randint(minvalue, maxvalue)
+                    x = random.randint(minvalue, min(max_dividend, maxvalue))  # Ensure the dividend is within the limit
+                    y = random.randint(minvalue, min(max_divisor, maxvalue))  # Ensure the divisor is within the limit
             else:
                 # Ensure division is exact (no remainder)
                 while x % y != 0:  # Ensure that x is evenly divisible by y
-                    x = random.randint(minvalue, maxvalue)
-                    y = random.randint(minvalue, maxvalue)
+                    x = random.randint(minvalue, min(max_dividend, maxvalue))  # Ensure the dividend is within the limit
+                    y = random.randint(minvalue, min(max_divisor, maxvalue))  # Ensure the divisor is within the limit
             
             # Ensure the smaller number is the divisor (outside the square)
             if x < y:
