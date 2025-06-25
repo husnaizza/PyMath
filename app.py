@@ -101,7 +101,7 @@ def index():
                 user_quotient = int(request.form['quotient'])
                 user_remainder = int(request.form['remainder'])
             except ValueError:
-                return "Invalid input. Please enter valid numbers for both quotient and remainder."
+                return "salah input. Please enter valid numbers for both quotient and remainder."
 
             actual_quotient, actual_remainder = questions[current_question_index]['answer']
             
